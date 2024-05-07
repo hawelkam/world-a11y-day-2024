@@ -1,41 +1,29 @@
 import type { MetaFunction } from "@remix-run/deno";
+import { useNavigate } from "@remix-run/react";
+import Button from "react-bootstrap/Button";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "World Accessibility Day 2024" },
+    { name: "description", content: "Accessibility Trivia Game" },
   ];
 };
 
 export default function Index() {
+  const navigate = useNavigate();
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+      <h2>World Accessibility Day 2024</h2>
+      <div>
+        <h1>Find 5 accessibility mistakes on the next screen</h1>
+        <p>
+          If something seems inaccessible, click on it to find out whether
+          you're right.
+        </p>
+      </div>
+      <Button variant="outline-primary">Primary</Button>
+      <button onClick={() => navigate("/game")}>Let's start</button>
     </div>
   );
 }
