@@ -1,6 +1,12 @@
 "use client";
 
-import { Button } from "@headlessui/react";
+import {
+  Button,
+  Description,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
 import { useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
@@ -14,6 +20,13 @@ export default function Game() {
     carousel: 0,
   });
   const [counter, setCounter] = useState(0);
+  const [learnMoreOpen, setLearnMoreOpen] = useState(false);
+  const [textOnImageOpen, setTextOnImageOpen] = useState(false);
+  const [movementOpen, setMovementOpen] = useState(false);
+  const [contrastOpen, setContrastOpen] = useState(false);
+  const [linksOpen, setLinksOpen] = useState(false);
+  const [carouselOpen, setCarouselOpen] = useState(false);
+  const [finishedOpen, setFinishedOpen] = useState(false);
 
   useEffect(() => {
     setCounter(Object.values(gamestate).reduce((a, b) => a + b, 0));
@@ -37,21 +50,46 @@ export default function Game() {
             <p className="bg-white text-center align-middle rounded border border-[#272936] text-[#272936] h-8">
               {counter} / 5
             </p>
-            <Button className="bg-[#0070AD] text-white font-light p-2 text-xs rounded-md hover:bg-[#0068ad]">
+            <Button
+              className="bg-[#0070AD] text-white font-light p-2 text-xs rounded-md hover:bg-[#0068ad]"
+              onClick={() => setLearnMoreOpen(true)}
+            >
               learn about accessibility
             </Button>
+            <Dialog
+              open={learnMoreOpen}
+              onClose={() => setLearnMoreOpen(false)}
+              className="relative z-50"
+            >
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                  <DialogTitle className="font-bold">
+                    Deactivate account
+                  </DialogTitle>
+                  <Description>
+                    This will permanently deactivate your account
+                  </Description>
+                  <p>
+                    Are you sure you want to deactivate your account? All of
+                    your data will be permanently removed.
+                  </p>
+                </DialogPanel>
+              </div>
+            </Dialog>
           </div>
         </div>
 
         <div className="bg-white w-full grid grid-cols-3 p-8 rounded-xl border border-[#0070AD] shadow-inner gap-8">
           <Button
             className="col-span-3"
-            onClick={() =>
+            onClick={() => {
+              setTextOnImageOpen(true);
               setGameState({
                 ...gamestate,
                 textOnImage: 1,
-              })
-            }
+              });
+            }}
           >
             <img
               src={"/assets/banner.png"}
@@ -59,14 +97,31 @@ export default function Game() {
               className="w-full"
             ></img>
           </Button>
+          <Dialog
+            open={textOnImageOpen}
+            onClose={() => setTextOnImageOpen(false)}
+            className="relative z-50"
+          >
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+              <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                <p>
+                  Text shouldn’t be shown as an image. This is because users
+                  with visual impairments use screen readers that read only
+                  regular text.
+                </p>
+              </DialogPanel>
+            </div>
+          </Dialog>
           <Button
             className="col-span-1 flex justify-center items-center"
-            onClick={() =>
+            onClick={() => {
+              setMovementOpen(true);
               setGameState({
                 ...gamestate,
                 movement: 1,
-              })
-            }
+              });
+            }}
           >
             <img
               src="/assets/parrot.gif"
@@ -74,14 +129,31 @@ export default function Game() {
               className="w-50"
             />
           </Button>
+          <Dialog
+            open={movementOpen}
+            onClose={() => setMovementOpen(false)}
+            className="relative z-50"
+          >
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+              <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                <p>
+                  Animated gifs are not accessible, when user has no possibility
+                  to pause or stop them. Interfaces shouldn’t show flashing
+                  content. This can cause discomfort in users with epilepsy.
+                </p>
+              </DialogPanel>
+            </div>
+          </Dialog>
           <div className="col-span-2">
             <Button
-              onClick={() =>
+              onClick={() => {
+                setContrastOpen(true);
                 setGameState({
                   ...gamestate,
                   contrast: 1,
-                })
-              }
+                });
+              }}
               className="text-left text-[#929399]"
             >
               <p className="mb-4">
@@ -99,27 +171,59 @@ export default function Game() {
                 Source: https://en.wikipedia.org/wiki/Parrot#Etymology
               </p>
             </Button>
+            <Dialog
+              open={contrastOpen}
+              onClose={() => setContrastOpen(false)}
+              className="relative z-50"
+            >
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                  <p>
+                    Normal text and background should have a contrast ratio of
+                    at least 4.5:1.
+                  </p>
+                </DialogPanel>
+              </div>
+            </Dialog>
             <Button
-              onClick={() =>
+              onClick={() => {
+                setLinksOpen(true);
                 setGameState({
                   ...gamestate,
                   links: 1,
-                })
-              }
+                });
+              }}
             >
               <a href="#" className="underline text-[#0070AD]">
                 CLICK HERE
               </a>
             </Button>
+            <Dialog
+              open={linksOpen}
+              onClose={() => setLinksOpen(false)}
+              className="relative z-50"
+            >
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                  <p>
+                    Link’s text should announce where the link leads to and what
+                    happens after clicking.
+                  </p>
+                </DialogPanel>
+              </div>
+            </Dialog>
           </div>
           <Button
             className="col-span-3"
-            onClick={() =>
+            onClick={() => {
+              setCarouselOpen(true);
               setGameState({
                 ...gamestate,
                 carousel: 1,
-              })
-            }
+              });
+            }}
           >
             <Carousel
               showArrows={false}
@@ -147,6 +251,21 @@ export default function Game() {
               </div>
             </Carousel>
           </Button>
+          <Dialog
+            open={carouselOpen}
+            onClose={() => setCarouselOpen(false)}
+            className="relative z-50"
+          >
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+              <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                <p>
+                  Users must be able to pause carousel movement because it can
+                  be too fast or distracting.
+                </p>
+              </DialogPanel>
+            </div>
+          </Dialog>
         </div>
       </div>
     </main>
