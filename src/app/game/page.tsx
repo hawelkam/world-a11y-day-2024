@@ -235,10 +235,9 @@ export default function Game() {
                   links: 1,
                 });
               }}
+              className="underline text-[#0070AD]"
             >
-              <a href="#" className="underline text-[#0070AD]">
-                CLICK HERE
-              </a>
+              CLICK HERE
             </Button>
             <Dialog
               open={linksOpen}
