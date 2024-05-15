@@ -32,6 +32,11 @@ export default function Game() {
     setCounter(Object.values(gamestate).reduce((a, b) => a + b, 0));
   }, [gamestate]);
 
+  const checkForFinishedGame = () => {
+    if (counter === 5) {
+      setFinishedOpen(true);
+    }
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl flex flex-col items-start gap-6">
@@ -63,16 +68,43 @@ export default function Game() {
             >
               <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
               <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-                  <DialogTitle className="font-bold">
-                    Deactivate account
+                <DialogPanel className="max-w-3xl space-y-4 border bg-white p-12">
+                  <DialogTitle className="text-3xl lg:text-5xl font-light">
+                    Learn more about accessibility
                   </DialogTitle>
                   <Description>
-                    This will permanently deactivate your account
+                    Accessibility focuses on making products and services
+                    accessible to as many people as possible (regardless of
+                    their health conditions or disabilities).
                   </Description>
+                  <ul className="list-disc list-inside	">
+                    When designing or developing a digital product, think of
+                    people who:
+                    <li>
+                      have visual impairments (don’t see colour or have poor
+                      sight)
+                    </li>
+                    <li>are older and don’t know technology well</li>
+                    <li>have auditory disabilities </li>
+                    <li>
+                      have cognitive disorders (f.e. dyslexia, seizures,
+                      epilepsy)
+                    </li>
+                    <li>are neurodivergent (ADHD, autism, anxiety)</li>
+                  </ul>
                   <p>
-                    Are you sure you want to deactivate your account? All of
-                    your data will be permanently removed.
+                    Everyone can benefit from accessible solutions. Especially
+                    because disabilities can also be temporary or situational
+                    (think about suffering from an injury or a disease).
+                  </p>
+                  <p>
+                    If you want to expand your accessibility knowledge, join{" "}
+                    <a
+                      className="underline font-bold"
+                      href="https://teams.microsoft.com/l/channel/19%3A919ac1d58f2741da84ca78e463d62176%40thread.tacv2/General?groupId=c3183e62-61d5-4e9c-b5cf-5085148ca817&tenantId=76a2ae5a-9f00-4f6b-95ed-5d33d77c4d61"
+                    >
+                      our Teams channel!
+                    </a>
                   </p>
                 </DialogPanel>
               </div>
@@ -99,7 +131,10 @@ export default function Game() {
           </Button>
           <Dialog
             open={textOnImageOpen}
-            onClose={() => setTextOnImageOpen(false)}
+            onClose={() => {
+              setTextOnImageOpen(false);
+              checkForFinishedGame();
+            }}
             className="relative z-50"
           >
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -131,7 +166,10 @@ export default function Game() {
           </Button>
           <Dialog
             open={movementOpen}
-            onClose={() => setMovementOpen(false)}
+            onClose={() => {
+              setMovementOpen(false);
+              checkForFinishedGame();
+            }}
             className="relative z-50"
           >
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -173,7 +211,10 @@ export default function Game() {
             </Button>
             <Dialog
               open={contrastOpen}
-              onClose={() => setContrastOpen(false)}
+              onClose={() => {
+                setContrastOpen(false);
+                checkForFinishedGame();
+              }}
               className="relative z-50"
             >
               <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -201,7 +242,10 @@ export default function Game() {
             </Button>
             <Dialog
               open={linksOpen}
-              onClose={() => setLinksOpen(false)}
+              onClose={() => {
+                setLinksOpen(false);
+                checkForFinishedGame();
+              }}
               className="relative z-50"
             >
               <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -253,7 +297,10 @@ export default function Game() {
           </Button>
           <Dialog
             open={carouselOpen}
-            onClose={() => setCarouselOpen(false)}
+            onClose={() => {
+              setCarouselOpen(false);
+              checkForFinishedGame();
+            }}
             className="relative z-50"
           >
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -268,6 +315,33 @@ export default function Game() {
           </Dialog>
         </div>
       </div>
+      <Dialog
+        open={finishedOpen}
+        onClose={() => setFinishedOpen(false)}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+          <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+            <DialogTitle className="font-bold">Congratulations!</DialogTitle>
+            <Description>You’ve found all 5 mistakes! 🎉</Description>
+            <p>We hope you had fun.</p>
+            <p>
+              You certainly proved that you know some basic facts about
+              accessibility.
+            </p>
+            <p>
+              If you want to stay up to date, join{" "}
+              <a
+                className="underline font-bold"
+                href="https://teams.microsoft.com/l/channel/19%3A919ac1d58f2741da84ca78e463d62176%40thread.tacv2/General?groupId=c3183e62-61d5-4e9c-b5cf-5085148ca817&tenantId=76a2ae5a-9f00-4f6b-95ed-5d33d77c4d61"
+              >
+                our Teams channel!
+              </a>
+            </p>
+          </DialogPanel>
+        </div>
+      </Dialog>
     </main>
   );
 }
