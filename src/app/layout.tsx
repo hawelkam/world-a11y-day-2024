@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ubuntu.className} text-[#2B0A3D]`}>{children}</body>
+      <body className={`${ubuntu.className} text-[#2B0A3D] bg-slate-200`}>
+        {children}
+      </body>
     </html>
   );
 }
